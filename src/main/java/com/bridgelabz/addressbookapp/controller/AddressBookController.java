@@ -37,4 +37,9 @@ public class AddressBookController {
        String message = addressBookService.addAddress(addressDTO);
        return new ResponseEntity(message,addressDTO,HttpStatus.OK);
     }
+    @PutMapping("/address/{id}")
+    public ResponseEntity updateAddress(@PathVariable int id,@Valid@RequestBody AddressDTO addressDTO){
+        String message = addressBookService.updateAddress(id, addressDTO);
+        return new ResponseEntity(message,addressDTO,HttpStatus.OK);
+    }
 }
