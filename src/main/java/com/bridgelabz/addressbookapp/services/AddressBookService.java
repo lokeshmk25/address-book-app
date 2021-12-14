@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class AddressBookService {
     private static final String DATA_ADDED_SUCCESSFULLY = "Data added to address book";
     private static final String ADDRESS_UPDATED_SUCCESSFULLY = "Address book data updated successfully";
+    private static final String ADDRESS_DELETED_SUCCESSFULLY = "Address deleted successfully";
     @Autowired
     private AddressBookRepository repository;
     @Autowired
@@ -47,5 +49,10 @@ public class AddressBookService {
         repository.save(buildAddressEntity);
         return ADDRESS_UPDATED_SUCCESSFULLY;
 
+    }
+    public String deleteAddress(int id){
+        Address address = findId(id);
+        repository.delete(address);
+        return ADDRESS_DELETED_SUCCESSFULLY;
     }
 }
