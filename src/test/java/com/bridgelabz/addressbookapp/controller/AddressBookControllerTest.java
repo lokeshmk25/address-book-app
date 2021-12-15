@@ -45,7 +45,24 @@ public class AddressBookControllerTest {
         Assertions.assertEquals(addressDTO,responseEntity.getData());
     }
     @Test
-    void givenaddressDTO_WhenAdded_ShouldReturnErrorMessage() {
+    void givenaddressDTO_WhenAdded_ShouldResponseEntity() {
+        String message = "Address updated successfully";
+        int id =1;
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName("Lokesh");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Ambur");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setZip("635808");
+        addressDTO.setPhoneNumber("9876543210");
+        when(service.updateAddress(id,addressDTO)).thenReturn(message);
+        ResponseEntity responseEntity = controller.updateAddress(id,addressDTO);
+        Assertions.assertEquals(message, responseEntity.getMessage());
+        Assertions.assertEquals(addressDTO,responseEntity.getData());
+    }
+
+    @Test
+    void givenaddressDTO_WhenDeleted_ShouldResponseEntity() {
         String message = "Address updated successfully";
         int id =1;
         AddressDTO addressDTO = new AddressDTO();
