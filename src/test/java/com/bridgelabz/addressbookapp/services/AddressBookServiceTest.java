@@ -9,8 +9,10 @@ import com.bridgelabz.addressbookapp.repository.AddressBookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
@@ -127,5 +129,33 @@ public class AddressBookServiceTest {
 
         when(addressBookRepository.findById(id)).thenReturn(Optional.empty());
         Assertions.assertThrows(EntityNotFoundException.class,()->service.updateAddress(id,addressDTO));
+    }
+
+    @Test
+    void givenAdressBookDto_WhenUpdateIsCalled_ShouldReturnSuccessMessage() {
+        String expectedmessage="Address book data updated successfully";
+        int id=1;
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName("Lokesh");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Vellore");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setPhoneNumber("9876543210");
+        addressDTO.setZip("635808");
+
+        Address address = new Address();
+        address.setName("Lokesh");
+        address.setAddress("Richie street");
+        address.setCity("Vellore");
+        address.setState("TamilNadu");
+        address.setPhoneNumber("9876543210");
+        address.setZip("635808");
+        address.setCreatedOn(LocalDateTime.now());
+        address.setUpdatedOn(LocalDateTime.now());
+
+        when(addressBookRepository.findById(id)).thenReturn(Optional.of(address));
+        when(builder.buildAddressEntity(addressDTO, address)).thenReturn(address);
+        String message = service.updateAddress(id, addressDTO);
+        Assertions.assertEquals(expectedmessage,message);
     }
 }
