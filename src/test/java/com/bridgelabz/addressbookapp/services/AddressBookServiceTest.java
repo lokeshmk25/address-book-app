@@ -40,7 +40,7 @@ public class AddressBookServiceTest {
 
     @Test
     void givengetallAddressMethod_WhenCalled_ShouldReturnListOfAddressbook() {
-        List<Address> addressList=new ArrayList<>();
+        List<Address> addressList = new ArrayList<>();
         Address address = new Address();
         address.setName("Lokesh");
         address.setAddress("Richie street");
@@ -62,7 +62,7 @@ public class AddressBookServiceTest {
         address1.setUpdatedOn(LocalDateTime.now());
         addressList.add(address1);
 
-        List<AddressDTO> addressDTOList=new ArrayList<>();
+        List<AddressDTO> addressDTOList = new ArrayList<>();
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setName("Sage");
         addressDTO.setAddress("Richie street");
@@ -84,14 +84,14 @@ public class AddressBookServiceTest {
         when(modelMapper.map(addressList.get(0), AddressDTO.class)).thenReturn(addressDTO);
         when(modelMapper.map(addressList.get(1), AddressDTO.class)).thenReturn(addressDTO1);
         List<AddressDTO> getallAddress = service.getallAddress();
-        Assertions.assertEquals(2,getallAddress.size());
-        Assertions.assertEquals(addressDTOList,getallAddress);
+        Assertions.assertEquals(2, getallAddress.size());
+        Assertions.assertEquals(addressDTOList, getallAddress);
 
     }
 
     @Test
     void givenAddressDto_WhenAddaddressCalled_ShouldReturnMessage() {
-        String actualmessage="Data added to address book";
+        String actualmessage = "Data added to address book";
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setName("Sage");
         addressDTO.setAddress("Richie street");
@@ -110,16 +110,16 @@ public class AddressBookServiceTest {
         address.setCreatedOn(LocalDateTime.now());
         address.setUpdatedOn(LocalDateTime.now());
 
-        when(modelMapper.map(addressDTO,Address.class)).thenReturn(address);
+        when(modelMapper.map(addressDTO, Address.class)).thenReturn(address);
         String message = service.addAddress(addressDTO);
-        verify(addressBookRepository,times(1)).save(address);
-        Assertions.assertEquals(actualmessage,message);
+        verify(addressBookRepository, times(1)).save(address);
+        Assertions.assertEquals(actualmessage, message);
     }
 
     @Test
     void givenAddressBookDtoandId_whenUpateAtmIsCalled_ShouldThrowException() {
         AddressDTO addressDTO = new AddressDTO();
-        int id=1;
+        int id = 1;
         addressDTO.setName("Sage");
         addressDTO.setAddress("Richie street");
         addressDTO.setCity("Vellore");
@@ -128,13 +128,13 @@ public class AddressBookServiceTest {
         addressDTO.setZip("635808");
 
         when(addressBookRepository.findById(id)).thenReturn(Optional.empty());
-        Assertions.assertThrows(EntityNotFoundException.class,()->service.updateAddress(id,addressDTO));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.updateAddress(id, addressDTO));
     }
 
     @Test
     void givenAdressBookDto_WhenUpdateIsCalled_ShouldReturnSuccessMessage() {
-        String expectedmessage="Address book data updated successfully";
-        int id=1;
+        String expectedmessage = "Address book data updated successfully";
+        int id = 1;
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setName("Lokesh");
         addressDTO.setAddress("Richie street");
@@ -156,6 +156,25 @@ public class AddressBookServiceTest {
         when(addressBookRepository.findById(id)).thenReturn(Optional.of(address));
         when(builder.buildAddressEntity(addressDTO, address)).thenReturn(address);
         String message = service.updateAddress(id, addressDTO);
-        Assertions.assertEquals(expectedmessage,message);
+        Assertions.assertEquals(expectedmessage, message);
+    }
+
+    @Test
+    void givenAdressBookDto_WhenDeleteIsCalled_ShouldReturnSuccessMessage() {
+        String expectedmessage = "Address deleted successfully";
+        int id = 1;
+        Address address = new Address();
+        address.setName("Lokesh");
+        address.setAddress("Richie street");
+        address.setCity("Vellore");
+        address.setState("TamilNadu");
+        address.setPhoneNumber("9876543210");
+        address.setZip("635808");
+        address.setCreatedOn(LocalDateTime.now());
+        address.setUpdatedOn(LocalDateTime.now());
+        when(addressBookRepository.findById(id)).thenReturn(Optional.of(address));
+        String message = service.deleteAddress(id);
+        Assertions.assertEquals(expectedmessage, message);
+
     }
 }
