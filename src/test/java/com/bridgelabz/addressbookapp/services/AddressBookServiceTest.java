@@ -14,9 +14,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -110,5 +112,20 @@ public class AddressBookServiceTest {
         String message = service.addAddress(addressDTO);
         verify(addressBookRepository,times(1)).save(address);
         Assertions.assertEquals(actualmessage,message);
+    }
+
+    @Test
+    void givenAddressBookDtoandId_whenUpateAtmIsCalled_ShouldThrowException() {
+        AddressDTO addressDTO = new AddressDTO();
+        int id=1;
+        addressDTO.setName("Sage");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Vellore");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setPhoneNumber("9876543210");
+        addressDTO.setZip("635808");
+
+        when(addressBookRepository.findById(id)).thenReturn(Optional.empty());
+        Assertions.assertThrows(EntityNotFoundException.class,()->service.updateAddress(id,addressDTO));
     }
 }
