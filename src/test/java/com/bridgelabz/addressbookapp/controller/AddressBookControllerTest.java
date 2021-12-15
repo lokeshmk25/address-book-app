@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.when;
 
 
@@ -77,4 +80,38 @@ public class AddressBookControllerTest {
         Assertions.assertEquals(message, responseEntity.getMessage());
         Assertions.assertEquals(addressDTO,responseEntity.getData());
     }
+
+    @Test
+    void givenAddressBookDtos_WhenaddedInRepository_ShouldReturnAddressBook() {
+        List<AddressDTO> addressDTOList=new ArrayList<>();
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName("Lokesh");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Ambur");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setZip("635808");
+        addressDTO.setPhoneNumber("9876543210");
+        addressDTOList.add(addressDTO);
+        AddressDTO addressDTO1 = new AddressDTO();
+        addressDTO1.setName("Toby");
+        addressDTO1.setAddress("Richie street");
+        addressDTO1.setCity("Ambur");
+        addressDTO1.setState("TamilNadu");
+        addressDTO1.setZip("635808");
+        addressDTO1.setPhoneNumber("9876543210");
+        addressDTOList.add(addressDTO1);
+
+        when(service.getallAddress()).thenReturn(addressDTOList);
+        List<AddressDTO> addressDTOs = controller.getallAddress();
+        for (int i = 0; i < addressDTOs.size(); i++) {
+            Assertions.assertEquals(addressDTOList.get(i).getName(), addressDTOs.get(i).getName());
+            Assertions.assertEquals(addressDTOList.get(i).getAddress(), addressDTOs.get(i).getAddress());
+            Assertions.assertEquals(addressDTOList.get(i).getCity(), addressDTOs.get(i).getCity());
+            Assertions.assertEquals(addressDTOList.get(i).getState(), addressDTOs.get(i).getState());
+            Assertions.assertEquals(addressDTOList.get(i).getPhoneNumber(), addressDTOs.get(i).getPhoneNumber());
+            Assertions.assertEquals(addressDTOList.get(i).getZip(), addressDTOs.get(i).getZip());
+        }
+
+
     }
+}
