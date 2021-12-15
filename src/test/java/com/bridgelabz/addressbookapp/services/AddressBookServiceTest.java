@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AddressBookServiceTest {
@@ -83,5 +83,32 @@ public class AddressBookServiceTest {
         Assertions.assertEquals(2,getallAddress.size());
         Assertions.assertEquals(addressDTOList,getallAddress);
 
+    }
+
+    @Test
+    void givenAddressDto_WhenAddaddressCalled_ShouldReturnMessage() {
+        String actualmessage="Data added to address book";
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName("Sage");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Vellore");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setPhoneNumber("9876543210");
+        addressDTO.setZip("635808");
+
+        Address address = new Address();
+        address.setName("Lokesh");
+        address.setAddress("Richie street");
+        address.setCity("Vellore");
+        address.setState("TamilNadu");
+        address.setPhoneNumber("9876543210");
+        address.setZip("635808");
+        address.setCreatedOn(LocalDateTime.now());
+        address.setUpdatedOn(LocalDateTime.now());
+
+        when(modelMapper.map(addressDTO,Address.class)).thenReturn(address);
+        String message = service.addAddress(addressDTO);
+        verify(addressBookRepository,times(1)).save(address);
+        Assertions.assertEquals(actualmessage,message);
     }
 }

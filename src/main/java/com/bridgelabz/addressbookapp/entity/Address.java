@@ -29,10 +29,10 @@ public class Address {
     private String city;
     @Column(name = "State")
     private String state;
-    @Column(name = "Phone_number")
-    private String phoneNumber;
     @Column(name = "zip")
     private String zip;
+    @Column(name = "Phone_number")
+    private String phoneNumber;
     @CreationTimestamp
     @Column(name = "created_on")
     private LocalDateTime createdOn;
