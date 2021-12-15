@@ -6,11 +6,19 @@ import com.bridgelabz.addressbookapp.services.AddressBookService;
 import com.bridgelabz.addressbookapp.entity.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @author LOKESH
+ * @version 0.0.1-SNAPSHOT
+ * @since 10-12-21
+ *
+ */
+@RestController
 @RequestMapping("/addressbook")
 public class AddressBookController {
 
@@ -41,5 +49,9 @@ public class AddressBookController {
     public ResponseEntity updateAddress(@PathVariable int id,@Valid@RequestBody AddressDTO addressDTO){
         String message = addressBookService.updateAddress(id, addressDTO);
         return new ResponseEntity(message,addressDTO,HttpStatus.OK);
+    }
+    public ResponseEntity deleteAddress(@PathVariable int id){
+        String message = addressBookService.deleteAddress(id);
+        return new ResponseEntity("ID is found",message,HttpStatus.OK);
     }
 }

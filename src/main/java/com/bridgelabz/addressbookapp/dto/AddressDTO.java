@@ -6,6 +6,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * @author LOKESH
+ * @version 0.0.1-SNAPSHOT
+ * @since 10-12-21
+ *
+ */
 @Data
 public class AddressDTO {
     @NotNull
@@ -15,7 +21,7 @@ public class AddressDTO {
     @NotNull
     private String address;
     @NotNull
-    @Min(value = 3,message = "City name should be minimum 3 letters")
+    @Pattern(regexp = "^[a-zA-Z\\s-]{3,}+$",message = "City should not contain numbers")
     private String city;
     @NotNull
     @Pattern(regexp = "^[a-zA-Z\\s-]{3,}+$",message = "State should not contain numbers")

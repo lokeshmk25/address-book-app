@@ -1,7 +1,12 @@
 package com.bridgelabz.addressbookapp.entity;
 
 import lombok.Data;
-
+/**
+ * @author LOKESH
+ * @version 0.0.1-SNAPSHOT
+ * @since 10-12-21
+ *
+ */
 @Data
 public class ResponseEntity {
     private String message;

@@ -5,6 +5,12 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * @author LOKESH
+ * @version 0.0.1-SNAPSHOT
+ * @since 10-12-21
+ *
+ */
 @Getter
 @Setter
 public class ErrorResponse {

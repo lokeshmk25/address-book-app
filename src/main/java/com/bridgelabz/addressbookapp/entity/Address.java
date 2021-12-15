@@ -7,6 +7,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * @author LOKESH
+ * @version 0.0.1-SNAPSHOT
+ * @since 10-12-21
+ *
+ */
 @Entity
 @Table(name = "address_book")
 @Data
