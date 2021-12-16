@@ -43,7 +43,6 @@ public class AddressBookIntegrationTest {
 
     @Test
     void addAddressTest() throws Exception{
-        when(addressBookService.addAddress(any())).thenReturn("success");
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setName("Lokesh");
         addressDTO.setAddress("Richie street");
@@ -57,4 +56,21 @@ public class AddressBookIntegrationTest {
                         .content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
-}
+
+    @Test
+    void updateAddressTest() throws Exception{
+        int id=1;
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setName("Lokesh");
+        addressDTO.setAddress("Richie street");
+        addressDTO.setCity("Ambur");
+        addressDTO.setState("TamilNadu");
+        addressDTO.setZip("635808");
+        addressDTO.setPhoneNumber("9876543210");
+        String jsonRequest = objectMapper.writeValueAsString(addressDTO);
+        when(addressBookService.addAddress(any())).thenReturn("success");
+        mockMvc.perform(MockMvcRequestBuilders.put("/addressbook/address/1")
+                        .content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
+    }
+    }
