@@ -50,6 +50,7 @@ public class AddressBookController {
         String message = addressBookService.updateAddress(id, addressDTO);
         return new ResponseEntity(message,addressDTO,HttpStatus.OK);
     }
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteAddress(@PathVariable int id){
         String message = addressBookService.deleteAddress(id);
         return new ResponseEntity("ID is found",message,HttpStatus.OK);
