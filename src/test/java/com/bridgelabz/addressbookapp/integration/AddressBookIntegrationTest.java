@@ -73,4 +73,12 @@ public class AddressBookIntegrationTest {
                         .content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void deleteAddressTest() throws Exception{
+        int id=1;
+        when(addressBookService.addAddress(any())).thenReturn("success");
+        mockMvc.perform(MockMvcRequestBuilders.delete("/addressbook/delete/1"))
+                .andExpect(status().isOk());
     }
+}
